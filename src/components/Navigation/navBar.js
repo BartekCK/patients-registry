@@ -5,10 +5,15 @@ import Logo from "../../resources/img/logo.png";
 import NavCloseImg from "../../resources/img/closeMenu.png";
 
 
-const LinkStyled = styled(Link)`
+export const LinkStyled = styled(Link)`
   text-decoration: none;
   font-size: 1em;
   color: white;
+  
+  &:hover{
+      border-bottom: 1px solid #ccc;
+
+  }
 `;
 
 
@@ -25,8 +30,8 @@ const NavigationItems = () => (
 
 const SingButtons = () => (
     <div>
-        <button>Zaloguj</button>
-        <button>Zarejestruj</button>
+        <Link to='/signin'><button>Zaloguj</button></Link>
+        <Link to='/singup'><button className='button-singup'>Zarejestruj</button></Link>
     </div>
 );
 
@@ -50,8 +55,8 @@ export const NavMobile = (props) => {
                 <nav>
                     <a href="/map">Mapa</a>
                     <a href="/contact">Kontakt</a>
-                    <a href="/login">Zaloguj</a>
-                    <a href="/register">Zarejestruj</a>
+                    <a href="/signin">Zaloguj</a>
+                    <a href="/signup">Zarejestruj</a>
                 </nav>
             </div>
         );

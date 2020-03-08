@@ -1,5 +1,6 @@
 import React from "react";
 import ImgBackground from '../../resources/img/background.png'
+import {Link} from "react-router-dom";
 
 
 export class Home extends React.Component {
@@ -13,7 +14,7 @@ export class Home extends React.Component {
                 <div className='TextDiv'>
                     <h1>Pomóż komuś, a może uratujesz samego siebie</h1>
                     <p>Za pomocą jednego kliknięcia znajdź osoby potrzebujące twojej pomocy</p>
-                    <button>Szukaj</button>
+                    <Link to='/map'><button>Szukaj</button></Link>
                 </div>
             </div>)
     }
