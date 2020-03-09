@@ -1,0 +1,126 @@
+{
+  "diseases": [
+    {
+      "typ": "choroby autoimmunologiczne",
+      "rodzaje": [
+        "toczeń rumieniowaty układowy",
+        "twardzina",
+        "układowe zapalenia naczyń",
+        "reumatoidalne zapalenie stawów",
+        "reaktywne zapalenie stawów",
+        "zesztywniające zapalenie stawów kręgosłupa",
+        "łuszczycowe zapalenie stawów",
+        "wrzodziejące zapalenie jelita grubego",
+        "choroba Crohna",
+        "zapalenie tarczycy Hashimoto",
+        "choroba Gravesa-Basedowa",
+        "choroba Addisona",
+        "miastenia",
+        "stwardnienie rozsiane",
+        " ostre rozsiane zapalenie mózgu i rdzenia",
+        "bielactwo nabyte",
+        "łuszczyca",
+        "łysienie plackowate",
+        "niedokrwistość Addisona-Biermera",
+        "sarkoidoza",
+        "cukrzyca typu 1"
+      ]
+    },
+    {
+      "typ": "choroby neurologiczne",
+      "rodzaje": [
+        "padaczka",
+        "stwardnienie zanikowe boczne",
+        "choroba i zespół Parkinsona (zespół parkinsonowski)",
+        "choroba Alzheimera",
+        "choroba Huntingtona",
+        "choroba Creutzfeldta-Jakoba",
+        "zespół Guillaina-Barrégo",
+        "stwardnienie rozsiane",
+        "migrena",
+        "klasterowy ból głowy",
+        "udar mózgu",
+        "zapalenie opon mózgowych",
+        "encefalopatia wątrobowa"
+      ]
+    },
+    {
+      "typ": "choroby nowotworowe",
+      "rodzaje": [
+        "nowotwór łagodny (neoplasma benignum)",
+        "nowotwór złośliwy (neoplasma malignum)",
+        "nowotwór miejscowo złośliwy"
+      ]
+    },
+    {
+      "typ": "choroby pasożytnicze",
+      "rodzaje": [
+        "toksoplazmoza",
+        "włośnica",
+        "sarkocystoza",
+        "fascjoloza",
+        "dikrocelioza",
+        "cysticerkoza (wągrzyca)",
+        "bąblowica",
+        "toksokaroza",
+        "świerzb",
+        "inwazje kleszczy",
+        "wszołowica",
+        "wszawica",
+        "leiszmanioza",
+        "alarioza",
+        "tasiemczyce",
+        "malaria",
+        "babeszjoza",
+        "strongyloidoza",
+        "nużyca"
+      ]
+    },
+    {
+      "typ": "choroby układu krążenia",
+      "rodzaje": [
+        "miażdżyca",
+        "choroba niedokrwienna serca (choroba wieńcowa)",
+        "ostre zespoły wieńcowe",
+        "zawał mięśnia sercowego",
+        "zaburzenia rytmu i przewodzenia",
+        "nadkomorowe zaburzenia rytmu serca",
+        "komorowe zaburzenia rytmu serca",
+        "zaburzenia automatyzmu i przewodzenia",
+        "wady serca (wrodzone i nabyte)",
+        "choroby wsierdzia",
+        "choroby mięśnia sercowego",
+        "zapalenie mięśnia sercowego",
+        "kardiomiopatie",
+        "choroby osierdzia",
+        "ostre zapalenie osierdzia",
+        "tamponada serca",
+        "zaciskające zapalenie osierdzia",
+        "nowotwór serca",
+        "niewydolność serca",
+        "ostra niewydolność serca",
+        "przewlekła niewydolność serca",
+        "nadciśnienie tętnicze",
+        "nadciśnienie płucne",
+        "choroby aorty i naczyń obwodowych",
+        "tętniak aorty",
+        "choroba Takayasu",
+        "zarostowo-zakrzepowe zapalenie naczyń",
+        "olbrzymiokomórkowe zapalenie tętnic",
+        "niedokrwienie kończyn dolnych",
+        "choroby żył obwodowych",
+        "zakrzepowe zapalenie żył powierzchownych",
+        "przewlekła niewydolność żylna",
+        "żylna choroba zakrzepowo-zatorowa",
+        "zakrzepica żył głębokich",
+        "zatorowość płucna",
+        "choroby mikrokrążenia",
+        "choroba Raynauda",
+        "siność siatkowata",
+        "akrocyjanoza",
+        "bolesny rumień kończyn",
+        "choroby naczyń chłonnych"
+      ]
+    }
+  ]
+}
