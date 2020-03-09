@@ -31,7 +31,7 @@ const NavigationItems = () => (
 const SingButtons = () => (
     <div>
         <Link to='/signin'><button>Zaloguj</button></Link>
-        <Link to='/singup'><button className='button-singup'>Zarejestruj</button></Link>
+        <Link to='/signup'><button className='button-singup'>Zarejestruj</button></Link>
     </div>
 );
 

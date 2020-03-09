@@ -2,7 +2,6 @@ import React from "react";
 import ImgBackground from '../../resources/img/background.png'
 import {Link} from "react-router-dom";
 
-
 export class Home extends React.Component {
 
     render() {

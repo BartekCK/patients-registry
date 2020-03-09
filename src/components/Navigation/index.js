@@ -31,17 +31,23 @@ export class Navigation extends React.Component {
 
     render() {
         return (
-            <div className='navigation-container'>
-                {this.state.width >= 850 ?
-                    <NavBar/>
-                    :
-                    <>
-                        <Link to="/"><img src={Logo} alt='logo'/></Link>
-                        <img onClick={this.updateClick} src={NavImg} alt=''/>
-                        <NavMobile isClicked={this.state.menuClick} click={this.updateClick}/>
-                    </>
-                }
+            <div className='application'>
+                <div className='navigation-container'>
+                    {this.state.width >= 850 ?
+                        <NavBar/>
+                        :
+                        <>
+                            <Link to="/"><img src={Logo} alt='logo'/></Link>
+                            <img onClick={this.updateClick} src={NavImg} alt=''/>
+                            <NavMobile isClicked={this.state.menuClick} click={this.updateClick}/>
+                        </>
+                    }
+                </div>
+                {this.props.children}
             </div>
+
+
+
         );
     }
 

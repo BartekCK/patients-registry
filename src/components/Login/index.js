@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Logo from '../../resources/img/loginImage.png'
 import {LinkStyled} from "../Navigation/navBar";
+import {GreenButton} from "../../helpers/theme";
 
 const LoginDiv = styled.div`
 width: 100vw;
-height: 80%;
+height: 100vh;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -35,16 +36,6 @@ const Input = styled.input`
     }
  `;
 
-const Button = styled.button`
-  margin: 10px 0 15px 0;
-  background:#0AC986;
-  font-size:16px;
-  width: 100%;
-  height:40px;
-  color:#fff;
-  font-weight: 600;
-  border:none;
-`;
 
 
 export class LoginPanel extends React.Component {
@@ -56,7 +47,7 @@ export class LoginPanel extends React.Component {
                     <img src={Logo} alt=''/>
                     <Input type="text" placeholder="Email"/><br/>
                     <Input type="password" placeholder="Hasło"/><br/>
-                    <Button type="submit">Zaloguj</Button>
+                    <GreenButton type="submit">Zaloguj</GreenButton>
                     <LinkStyled to='/singup'>Załóż konto</LinkStyled>
                 </Form>
             </LoginDiv>
