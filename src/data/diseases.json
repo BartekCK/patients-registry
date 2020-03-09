@@ -1,8 +1,8 @@
 {
   "diseases": [
     {
-      "typ": "choroby autoimmunologiczne",
-      "rodzaje": [
+      "type": "choroby autoimmunologiczne",
+      "kind": [
         "toczeń rumieniowaty układowy",
         "twardzina",
         "układowe zapalenia naczyń",
@@ -16,8 +16,7 @@
         "choroba Gravesa-Basedowa",
         "choroba Addisona",
         "miastenia",
-        "stwardnienie rozsiane",
-        " ostre rozsiane zapalenie mózgu i rdzenia",
+        "ostre rozsiane zapalenie mózgu i rdzenia",
         "bielactwo nabyte",
         "łuszczyca",
         "łysienie plackowate",
@@ -27,8 +26,8 @@
       ]
     },
     {
-      "typ": "choroby neurologiczne",
-      "rodzaje": [
+      "type": "choroby neurologiczne",
+      "kind": [
         "padaczka",
         "stwardnienie zanikowe boczne",
         "choroba i zespół Parkinsona (zespół parkinsonowski)",
@@ -45,16 +44,16 @@
       ]
     },
     {
-      "typ": "choroby nowotworowe",
-      "rodzaje": [
+      "type": "choroby nowotworowe",
+      "kind": [
         "nowotwór łagodny (neoplasma benignum)",
         "nowotwór złośliwy (neoplasma malignum)",
         "nowotwór miejscowo złośliwy"
       ]
     },
     {
-      "typ": "choroby pasożytnicze",
-      "rodzaje": [
+      "type": "choroby pasożytnicze",
+      "kind": [
         "toksoplazmoza",
         "włośnica",
         "sarkocystoza",
@@ -77,8 +76,8 @@
       ]
     },
     {
-      "typ": "choroby układu krążenia",
-      "rodzaje": [
+      "type": "choroby układu krążenia",
+      "kind": [
         "miażdżyca",
         "choroba niedokrwienna serca (choroba wieńcowa)",
         "ostre zespoły wieńcowe",

@@ -21,5 +21,15 @@ export const UserSchema = new mongoose.Schema({
     disease: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'DiseaseCard'
+    },
+    helpMe: {
+        type: Boolean,
+        default: false
+    },
+    xCoordinate: {
+        type: Number
+    },
+    yCoordinate: {
+        type: Number
     }
 });

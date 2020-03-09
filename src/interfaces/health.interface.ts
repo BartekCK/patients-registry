@@ -1,4 +1,3 @@
-
 export interface HealthInterface {
     readonly id?: string;
     readonly emergencyNumber?: string;

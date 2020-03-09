@@ -4,8 +4,6 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {UserModule} from "./user.module";
 import {HealthModule} from "./health.module";
 import {AuthModule} from "./auth.module";
-import {PermitGuard} from "../auth/permits/PermitGuard";
-import {APP_GUARD} from "@nestjs/core";
 import {LoginController} from "../controllers/login.controller";
 
 @Module({
@@ -17,10 +15,6 @@ import {LoginController} from "../controllers/login.controller";
         AuthModule
     ],
     controllers: [LoginController],
-    providers: [{
-        provide: APP_GUARD,
-        useClass: PermitGuard,
-    }],
 })
 export class AppModule {
 }

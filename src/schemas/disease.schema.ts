@@ -4,15 +4,8 @@ export const DiseaseSchema = mongoose.Schema({
     type: {
         type: String
     },
-    kind: String,
-    helpMe: {
-        type: Boolean,
-        default: false
+    kind: {
+        type: String,
+        unique: true
     },
-    xCoordinate: {
-        type: Number
-    },
-    yCoordinate: {
-        type: Number
-    }
 });
