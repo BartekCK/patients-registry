@@ -5,9 +5,10 @@ import {DiseaseSchema} from "../schemas/disease.schema";
 import {DiseaseService} from "../services/disease.service";
 
 @Module({
-    imports: [MongooseModule.forFeature([{name: 'DiseaseCard', schema: DiseaseSchema}])],
+    imports: [MongooseModule.forFeature([{name: 'diseases', schema: DiseaseSchema}])],
     controllers: [DiseaseController],
     providers: [DiseaseService],
+    exports: [DiseaseService]
 })
 export class DiseaseModule {
 }

@@ -16,12 +16,12 @@ export const UserSchema = new mongoose.Schema({
     },
     health: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'HealthCard'
+        ref: 'healths'
     },
-    disease: {
+    disease: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'DiseaseCard'
-    },
+        ref: 'diseases'
+    }],
     helpMe: {
         type: Boolean,
         default: false

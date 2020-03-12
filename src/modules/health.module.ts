@@ -3,7 +3,7 @@ import {MongooseModule} from "@nestjs/mongoose";
 import {HealthSchema} from "../schemas/health.schema";
 
 @Module({
-    imports: [MongooseModule.forFeature([{name: 'HealthCard', schema: HealthSchema}])],
+    imports: [MongooseModule.forFeature([{name: 'healths', schema: HealthSchema}])],
     controllers: [],
     providers: [],
 })
