@@ -48,7 +48,7 @@ export class LoginPanel extends React.Component {
                     <Input type="text" placeholder="Email"/><br/>
                     <Input type="password" placeholder="Hasło"/><br/>
                     <GreenButton type="submit">Zaloguj</GreenButton>
-                    <LinkStyled to='/singup'>Załóż konto</LinkStyled>
+                    <LinkStyled to='/signup'>Załóż konto</LinkStyled>
                 </Form>
             </LoginDiv>
         )

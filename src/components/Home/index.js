@@ -11,7 +11,8 @@ export class Home extends React.Component {
                     <img src={ImgBackground} alt='medic-app'/>
                 </div>
                 <div className='TextDiv'>
-                    <h1>Pomóż komuś, a może uratujesz samego siebie</h1>
+                    {/*<h1>Pomóż komuś, a może uratujesz samego siebie</h1>*/}
+                    <h1>Publiczny rejestr identyfikacyjny chorych osób</h1>
                     <p>Za pomocą jednego kliknięcia znajdź osoby potrzebujące twojej pomocy</p>
                     <Link to='/map'><button>Szukaj</button></Link>
                 </div>
