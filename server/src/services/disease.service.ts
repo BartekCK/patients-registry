@@ -4,7 +4,6 @@ import {Model} from 'mongoose';
 import {DiseaseInterface} from "../interfaces/disease.interface";
 import {DiseaseDto} from "../dto/disease.dto";
 import {errorDbHandling, errorHandling} from "../helpers/errors";
-import {UserInterface} from "../interfaces/user.interface";
 
 @Injectable()
 export class DiseaseService {
@@ -22,19 +21,17 @@ export class DiseaseService {
         return temp;
     }
 
-    async findDiseases(diseaseDto: DiseaseDto) : Promise<DiseaseInterface> {
+    async findDiseases(diseaseDto: DiseaseDto): Promise<DiseaseInterface> {
         const temp: DiseaseInterface = await this.disease.findOne(diseaseDto).catch(errorDbHandling);
         errorHandling(temp, `Disease ${diseaseDto} don't exist in db `, HttpStatus.NOT_FOUND);
         return temp;
     }
 
-    async findDiseasesById(diseaseId: string) : Promise<DiseaseInterface> {
+    async findDiseasesById(diseaseId: string): Promise<DiseaseDto> {
         const temp: DiseaseInterface = await this.disease.findOne({_id: diseaseId}).catch(errorDbHandling);
         errorHandling(temp, `Disease ${diseaseId} don't exist in db `, HttpStatus.NOT_FOUND);
         return temp;
     }
-
-
 
 
 }

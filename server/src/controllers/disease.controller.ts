@@ -1,8 +1,7 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Controller, Get, Post} from '@nestjs/common';
 import * as DiseasesJSON from '../data/diseases.json'
 import {ApiTags} from "@nestjs/swagger";
 import {DiseaseService} from "../services/disease.service";
-import {DiseaseDto} from "../dto/disease.dto";
 
 @ApiTags('diseases')
 @Controller('/diseases')

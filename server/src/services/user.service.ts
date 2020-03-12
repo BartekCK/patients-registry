@@ -5,9 +5,9 @@ import {UserInterface} from "../interfaces/user.interface";
 import {SignUpDto} from "../dto/signDto";
 import {errorDbHandling, errorHandling} from "../helpers/errors";
 import {DiseaseDto} from "../dto/disease.dto";
-import {UserDto} from "../dto/user.dto";
 import {DiseaseService} from "./disease.service";
 import {DiseaseInterface} from "../interfaces/disease.interface";
+import {UserDto} from "../dto/user.dto";
 
 
 @Injectable()
@@ -27,9 +27,10 @@ export class UserService {
         return temp;
     }
 
-    async findOneById(userId: string): Promise<UserInterface> {
+    async findOneById(userId: string): Promise<UserDto> {
         const temp: UserInterface = await this.user.findOne({_id: userId}).catch(errorDbHandling);
         errorHandling(temp, `User with id ${userId} not found `, HttpStatus.NOT_FOUND);
+        temp.disease = await this.getAllUserDiseases(userId);
         return temp;
     }
 

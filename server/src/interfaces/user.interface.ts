@@ -8,7 +8,7 @@ export interface UserInterface {
     readonly phone: string;
 
     readonly health?: HealthInterface;
-    readonly disease?: DiseaseInterface[];
+    disease?: DiseaseInterface[];
 
     readonly helpMe?: boolean;
     readonly xCoordinate?: number;

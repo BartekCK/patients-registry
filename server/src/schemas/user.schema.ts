@@ -1,5 +1,36 @@
 import * as mongoose from 'mongoose';
 
+const HealthInformation = new mongoose.Schema({
+
+    emergencyNumber: {
+        type: String,
+    },
+    howHelp: {
+        type: String,
+        maxLength: 256,
+    },
+    notDo: {
+        type: String,
+        maxLength: 256,
+    },
+}, {_id: false});
+
+
+const CoordinateInformation = new mongoose.Schema({
+
+    helpMe: {
+        type: Boolean,
+        default: false
+    },
+    xCoordinate: {
+        type: Number
+    },
+    yCoordinate: {
+        type: Number
+    }
+}, {_id: false});
+
+
 export const UserSchema = new mongoose.Schema({
 
     email: {
@@ -14,22 +45,11 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    health: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'healths'
-    },
     disease: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'diseases'
     }],
-    helpMe: {
-        type: Boolean,
-        default: false
-    },
-    xCoordinate: {
-        type: Number
-    },
-    yCoordinate: {
-        type: Number
-    }
+    coordinateInformation: CoordinateInformation,
+
+    healthInformation: HealthInformation
 });

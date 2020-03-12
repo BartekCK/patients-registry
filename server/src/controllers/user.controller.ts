@@ -36,7 +36,7 @@ export class UserController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Get('diseases')
-    async getAllUserDiseases(@Request() req) : Promise <DiseaseDto[]> {
+    async getAllUserDiseases(@Request() req): Promise<DiseaseDto[]> {
         return this.userService.getAllUserDiseases(req.user.userId);
     }
 
