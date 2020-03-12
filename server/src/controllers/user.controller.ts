@@ -29,8 +29,15 @@ export class UserController {
     @ApiBody({type: [DiseaseDto]})
     @UseGuards(AuthGuard('jwt'))
     @Post('diseases')
-    async addDiseases(@Request() req, @Body() diseasesDtoArray: DiseaseDto[]): Promise<UserDto> {
-        return this.userService.addDiseases(req.user.userId, diseasesDtoArray);
+    async addDiseases(@Request() req, @Body() diseasesDtoArray: DiseaseDto[]): Promise<DiseaseDto[]> {
+        return this.userService.updateUserDiseases(req.user.userId, diseasesDtoArray);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @Get('diseases')
+    async getAllUserDiseases(@Request() req) : Promise <DiseaseDto[]> {
+        return this.userService.getAllUserDiseases(req.user.userId);
     }
 
 

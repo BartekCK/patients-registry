@@ -33,20 +33,31 @@ export class UserService {
         return temp;
     }
 
-    async addDiseases(userId: string, diseasesDtoArray: DiseaseDto[]): Promise<UserDto> {
-        const temp: UserInterface = await this.findOneById(userId);
-        const arr:any[] = [];
-        for (const diseaseDto of diseasesDtoArray) {
-            const disease: DiseaseInterface = await this.diseaseService.findDiseases(diseaseDto);
-            //temp.disease.push(disease);
-            arr.push(disease);
+    async updateUserDiseases(userId: string, diseasesDtoArray: DiseaseDto[]): Promise<DiseaseDto[]> {
+        try {
+            await this.deleteUserDiseasesList(userId);
+            for (const diseaseDto of diseasesDtoArray) {
+                const diseaseFind: DiseaseInterface = await this.diseaseService.findDiseases(diseaseDto);
+                await this.user.updateOne({_id: userId}, {$addToSet: {disease: diseaseFind}})
+            }
+            return this.getAllUserDiseases(userId);
+        } catch (e) {
+            errorDbHandling(e)
         }
-        this.user.updateOne({_id: userId},{$addToSet:{disease: arr}});
-        return this.updateUser(userId, temp);
+        return null;
     }
 
-    async updateUser(userId: string, userInterface: UserInterface): Promise<UserDto> {
-        return await this.user.updateOne({_id: userId}, userInterface).catch(errorDbHandling);
+    async getAllUserDiseases(userId: string): Promise<DiseaseDto[]> {
+        const {disease} = await this.user.findOne({_id: userId}, 'disease').catch(errorDbHandling);
+        const temp: DiseaseDto[] = [];
+        for (let D of disease) {
+            temp.push(await this.diseaseService.findDiseasesById(D));
+        }
+        return temp;
+    }
+
+    private async deleteUserDiseasesList(userId: string) {
+        await this.user.updateOne({_id: userId}, {$set: {disease: []}}).catch(errorDbHandling);
     }
 
 

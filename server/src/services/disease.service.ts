@@ -11,7 +11,7 @@ export class DiseaseService {
     constructor(@InjectModel('diseases') private readonly disease: Model<DiseaseInterface>) {
     }
 
-    async addDisease(diseaseDto: DiseaseDto) {
+    async addDisease(diseaseDto: DiseaseDto) {//BY JSON
         const createDisease = new this.disease(diseaseDto);
         return await createDisease.save().catch(errorDbHandling);
     }
@@ -27,4 +27,14 @@ export class DiseaseService {
         errorHandling(temp, `Disease ${diseaseDto} don't exist in db `, HttpStatus.NOT_FOUND);
         return temp;
     }
+
+    async findDiseasesById(diseaseId: string) : Promise<DiseaseInterface> {
+        const temp: DiseaseInterface = await this.disease.findOne({_id: diseaseId}).catch(errorDbHandling);
+        errorHandling(temp, `Disease ${diseaseId} don't exist in db `, HttpStatus.NOT_FOUND);
+        return temp;
+    }
+
+
+
+
 }
