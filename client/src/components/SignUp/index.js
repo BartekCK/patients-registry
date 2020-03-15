@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-// import axios from 'axios';
+import axios from 'axios';
 import Image from '../../resources/img/signUpData.png';
 import {GreenButton} from "../../helpers/theme";
+import {Redirect} from 'react-router-dom'
 
 const RegistrationPanel = styled.div`
 width: 100vw;
@@ -66,22 +67,14 @@ const validate = props => {
 
 export class SignUpPanel extends React.Component {
 
-
     state = {
-        diseases: [],
         email: '',
         password: '',
         passwordRep: '',
         phone: '',
-        err: null
+        err: null,
+        registered: false
     };
-
-    // componentDidMount = () => {
-    //     axios.get('http://localhost:3001/diseases')
-    //         .then(res => {
-    //             this.setState({diseases: res.data.diseases});
-    //         })
-    // };
 
     updateField = e => {
         this.setState({[e.target.name]: e.target.value})
@@ -91,8 +84,14 @@ export class SignUpPanel extends React.Component {
         e.preventDefault();
         const tempErr = validate(this.state);
         this.setState({err: tempErr});
-        if(tempErr) {
-
+        if (!tempErr) {
+            axios.post('http://localhost:3001/users', {...this.state})
+                .then(response => {
+                    if (response.status === 201) {
+                        this.setState({registered: true});
+                    }
+                })
+                .catch(error => this.setState({err: error.message}));
         }
     };
 
@@ -101,7 +100,7 @@ export class SignUpPanel extends React.Component {
 
         return (
             <RegistrationPanel>
-                <div >
+                <div>
                     {this.state.err && <ErrorDiv ref={this.focusRef}>{this.state.err}</ErrorDiv>}
                     <Form onSubmit={this.handleSubmit}>
                         <label>Email *</label> <input type='email' name='email' onChange={this.updateField}/>
@@ -112,8 +111,8 @@ export class SignUpPanel extends React.Component {
                         <GreenButton type='submit'>Załóż konto</GreenButton>
                     </Form>
                 </div>
-
                 <img src={Image} alt=''/>
+                {this.state.registered && <Redirect to='/'/>}
             </RegistrationPanel>
         );
     }

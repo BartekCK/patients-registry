@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Logo from '../../resources/img/loginImage.png'
 import {LinkStyled} from "../Navigation/navBar";
 import {GreenButton} from "../../helpers/theme";
+import axios from 'axios';
+import {Redirect} from 'react-router-dom'
 
 const LoginDiv = styled.div`
 width: 100vw;
@@ -37,19 +39,43 @@ const Input = styled.input`
  `;
 
 
-
 export class LoginPanel extends React.Component {
+
+
+    state = {
+        username: '',
+        password: '',
+        isLogin: false
+    };
+
+    updateField = e => {
+        this.setState({[e.target.name]: e.target.value})
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:3001/login', {...this.state})
+            .then(response => {
+                this.setState({isLogin: true});
+                window.localStorage.setItem('token', response.data.access_token);
+                this.props.setCredentials(response.data.access_token);
+            })
+            .catch(err => console.log(err));
+
+
+    };
 
     render() {
         return (
             <LoginDiv>
-                <Form className="login">
+                <Form className="login" onSubmit={this.handleSubmit}>
                     <img src={Logo} alt=''/>
-                    <Input type="text" placeholder="Email"/><br/>
-                    <Input type="password" placeholder="Hasło"/><br/>
+                    <Input name='username' type="text" placeholder="Email" onChange={this.updateField}/><br/>
+                    <Input name='password' type="password" placeholder="Hasło" onChange={this.updateField}/><br/>
                     <GreenButton type="submit">Zaloguj</GreenButton>
                     <LinkStyled to='/signup'>Załóż konto</LinkStyled>
                 </Form>
+                {this.state.isLogin && <Redirect to='/'/>}
             </LoginDiv>
         )
     }

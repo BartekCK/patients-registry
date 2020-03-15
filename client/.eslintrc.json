@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    // ...
+    "react-hooks"
+  ],
+  "rules": {
+    // ...
+    "react-hooks/rules-of-hooks": "error", // Sprawdza stosowanie zasad hooków
+    "react-hooks/exhaustive-deps": "warn" // Sprawdza zależności efektów
+  }
+}

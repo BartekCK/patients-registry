@@ -3,6 +3,18 @@ import {NavBar, NavMobile} from "./navBar";
 import Logo from '../../resources/img/logo.png'
 import {Link} from "react-router-dom";
 import NavImg from '../../resources/img/nav.png'
+import styled from "styled-components";
+
+const NavigationContainer = styled.div`
+    margin: 0 10px 0 10px;
+    padding-top: 5px;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+`;
 
 export class Navigation extends React.Component {
 
@@ -32,20 +44,20 @@ export class Navigation extends React.Component {
     render() {
         return (
             <div className='application'>
-                <div className='navigation-container'>
+                <NavigationContainer>
                     {this.state.width >= 850 ?
                         <NavBar/>
                         :
                         <>
                             <Link to="/"><img src={Logo} alt='logo'/></Link>
                             <img onClick={this.updateClick} src={NavImg} alt=''/>
-                            <NavMobile isClicked={this.state.menuClick} click={this.updateClick}/>
+                            <NavMobile isClicked={this.state.menuClick} click={this.updateClick}
+                            />
                         </>
                     }
-                </div>
+                </NavigationContainer>
                 {this.props.children}
             </div>
-
 
 
         );
