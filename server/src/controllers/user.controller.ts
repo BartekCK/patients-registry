@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Request, UseGuards} from "@nestjs/common";
+import {Body, Controller, Get, Post, Put, Request, UseGuards} from "@nestjs/common";
 import {UserDto} from "../dto/user.dto";
 import {ApiBearerAuth, ApiBody, ApiTags} from "@nestjs/swagger";
 import {UserService} from "../services/user.service";
@@ -23,6 +23,13 @@ export class UserController {
     @Get()
     async getUser(@Request() req): Promise<UserDto> {
         return this.userService.findOneById(req.user.userId);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @Put()
+    async updateUser(@Request() req, @Body() userDto: SignUpDto): Promise<UserDto> {
+        return this.userService.updateUser(req.user.userId, userDto);
     }
 
     @ApiBearerAuth()

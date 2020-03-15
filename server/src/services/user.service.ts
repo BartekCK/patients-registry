@@ -34,6 +34,10 @@ export class UserService {
         return temp;
     }
 
+    async updateUser(userId: string, userDto: SignUpDto): Promise<UserDto> {
+        return await this.user.updateOne({_id: userId}, {$set: {...userDto}}).catch(errorDbHandling);
+    }
+
     async updateUserDiseases(userId: string, diseasesDtoArray: DiseaseDto[]): Promise<DiseaseDto[]> {
         try {
             await this.deleteUserDiseasesList(userId);
