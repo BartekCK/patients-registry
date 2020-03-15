@@ -16,7 +16,6 @@ const SettingContainer = styled.div`
     @media screen and (max-width: 850px) {
       flex-direction: column;
       justify-content: space-between;
-
 }
 `;
 
@@ -28,6 +27,10 @@ const LeftPanel = styled.div`
 `;
 const RightPanel = styled.div`
     width: 85vw;
+    
+    @media screen and (max-width: 850px) {
+      width: 100%;
+}
 `;
 
 const Button = styled.button`
@@ -54,29 +57,31 @@ background: #0099FF;
 @media screen and (max-width: 850px) {
       width: 100%;
       height: 50px;
+      margin-bottom: 10px;
 `;
 
 export class SettingsProfile extends React.Component {
 
     render() {
         return (
-            <SettingContainer><HashRouter>
-                <LeftPanel>
+            <SettingContainer>
+                <HashRouter>
+                    <LeftPanel>
 
-                    <NavLink exact to='/diseases'> <Button>Choroby</Button>
-                    </NavLink>
-                    <NavLink to='/information'> <Button>Informacje</Button>
-                    </NavLink>
-                    <NavLink to='/user'> <Button>Dane użytkownika</Button>
-                    </NavLink>
+                        <NavLink exact to='/diseases'> <Button>Choroby</Button>
+                        </NavLink>
+                        <NavLink to='/information'> <Button>Informacje</Button>
+                        </NavLink>
+                        <NavLink to='/user'> <Button>Dane użytkownika</Button>
+                        </NavLink>
 
-                </LeftPanel>
-                <RightPanel>
-                    <Route path="/diseases" component={DiseasePanel}/>
-                    <Route path="/information" component={InformationPanel}/>
-                    <Route path="/user" component={CredentialsPanel}/>
-                </RightPanel>
-            </HashRouter>
+                    </LeftPanel>
+                    <RightPanel>
+                        <Route path="/diseases" component={DiseasePanel}/>
+                        <Route path="/information" component={InformationPanel}/>
+                        <Route path="/user" component={CredentialsPanel}/>
+                    </RightPanel>
+                </HashRouter>
             </SettingContainer>);
     }
 

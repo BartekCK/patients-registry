@@ -4,11 +4,18 @@ import {GreenButton} from "../../../helpers/theme";
 import axios from 'axios';
 import {AddInput} from "./AddInput";
 import * as _ from 'ramda';
+import {ConfigApi} from "../../../helpers/routes";
 
 const DiseaseDiv = styled.div`
 display: flex;
 justify-content: space-around;
 height: 100%;
+width: 100%;
+@media screen and (max-width: 850px) {
+flex-direction: column;
+height: 65vh;
+
+}
 `;
 
 const Select = styled.select`
@@ -28,11 +35,21 @@ display: flex;
 white-space: pre;
 min-height: 20px;
 padding: 100px;
+}
+@media screen and (max-width: 850px) {
+width: 100%;
+margin: 10px 0 10px 0;
+}
 `;
 
-const AddButton = styled(GreenButton)`
+export const AddButton = styled(GreenButton)`
 margin: 0;
 width: 20vw;
+
+@media screen and (max-width: 850px) {
+width: 100%;
+margin: 10px 0 10px 0;
+}
 `;
 
 const AddDiv = styled.div`
@@ -40,6 +57,7 @@ height: 100%;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
+overflow: auto;
 `;
 
 export class DiseasePanel extends React.Component {
@@ -61,7 +79,7 @@ export class DiseasePanel extends React.Component {
             .catch(err => console.log(err));
 
         await axios.get('http://localhost:3001/users/diseases',
-            {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
+            ConfigApi)
             .then(response => this.setState({chooseList: response.data}))
             .catch(err => console.log(err));
 
@@ -84,7 +102,7 @@ export class DiseasePanel extends React.Component {
     saveAll = async () => {
         await axios.post('http://localhost:3001/users/diseases',
             this.state.chooseList,
-            {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
+            ConfigApi)
             .then(response => console.log(response))
             .catch(err => console.log(err));
     };

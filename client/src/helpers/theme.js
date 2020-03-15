@@ -11,12 +11,11 @@ export const Button = styled.button`
     color: white;
     letter-spacing: 0.04em;
     cursor: pointer;
-
+    transition: all 0.2s;
      &:hover {
     opacity: 0.7;
     }
 `;
-
 
 export const GreenButton = styled.button`
   margin: 10px 0 15px 0;
@@ -28,5 +27,10 @@ export const GreenButton = styled.button`
   font-weight: 600;
   border:none;
   cursor: pointer;
+  transition: all 0.2s;
+   &:hover {
+     color:#000000;
+     background:#FFF
+}
 
 `;

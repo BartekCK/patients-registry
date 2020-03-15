@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {GreenButton} from "../../../helpers/theme";
 
-const ShowInput = styled.input`
+export const ShowInput = styled.input`
   width: 80%;
     height: 40px;
     background-color: transparent;
