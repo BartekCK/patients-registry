@@ -120,6 +120,75 @@
         "bolesny rumień kończyn",
         "choroby naczyń chłonnych"
       ]
+    },
+    {
+      "type": "choroby reumatyczne",
+      "kind": [
+        "Reumatoidalne zapalenie stawów",
+        "Młodzieńcze idiopatyczne zapalenie stawów",
+        "Toczeń rumieniowaty układowy",
+        "Twardzina",
+        "Zapalenie wielomięśniowe i zapalenie skórno-mięśniowe",
+        "Martwicze zapalenia naczyń i inne choroby naczyń:",
+        "Guzkowe zapalenie tętnic",
+        "Zapalenia naczyń z nadwrażliwości",
+        " Ziarniniakowatość z zapaleniem naczyń",
+        "Olbrzymiokomórkowe zapalenia tętnic",
+        " Zapalenie tętnicy skroniowej",
+        "Zespół Takayasu",
+        "Choroba Kawasakiego",
+        "Choroba Behçeta",
+        "Krioglobulinemia",
+        "Zespół Sjögrena",
+        "Zespoły nakładania,",
+        "Polimialgia reumatyczna",
+        "Zapalenie tkanki tłuszczowej",
+        "Rumień guzowaty",
+        "Nawracające zapalenie chrząstek",
+        "Zapalenie powięzi z eozynofilią",
+        "Choroba Stilla u dorosłych,",
+        "Zesztywniające zapalenie stawów kręgosłupa",
+        "Reaktywne zapalenie stawów",
+        "Łuszczycowe zapalenie stawów",
+        "Zapalenia stawów towarzyszące przewlekłym zapalnym chorobom jelit",
+        "Choroba zwyrodnieniowa stawów",
+        "Arthrogryposis multiplex congenita",
+        "Zespoły nadmiernej wiotkości (elastopatie)",
+        "Postępujące kostniejące zapalenie mięśni",
+        "Obwodowe zespoły uciskowe"
+      ]
+    },
+    {
+      "type": "choroby zakaźne",
+      "kind": [
+        "parwowirusy",
+        "adenowirusy",
+        "papillomawirusy",
+        "pikornawirusy",
+        "paramyksowirusy",
+        "herpeswirusy",
+        "koronawirusy",
+        "ortomyksowirusy",
+        "retrowirusy",
+        "pokswirusy",
+        "rabdowirusy"
+      ]
+    },
+    {
+      "type": "choroby psychiczne",
+      "kind": [
+        "zaburzenia psychiczne organiczne, włącznie z zespołami objawowymi",
+        "zaburzenia psychiczne i zachowania spowodowane używaniem środków (substancji) psychoaktywnych",
+        "schizofrenia, zaburzenia typu schizofrenii (schizotypowe) i urojeniowe",
+        "zaburzenia nastroju (afektywne)",
+        "zaburzenia nerwicowe, związane ze stresem i pod postacią somatyczną",
+        "zespoły behawioralne związane z zaburzeniami fizjologicznymi i czynnikami fizycznymi",
+        "zaburzenia osobowości i zachowania dorosłych",
+        "upośledzenia umysłowe",
+        "zaburzenia rozwoju psychicznego (psychologicznego)",
+        "zaburzenia zachowania i emocji rozpoczynające się zwykle w dzieciństwie i w wieku młodzieńczym",
+        "zaburzenia psychiczne bliżej nieokreślone (BNO)"
+      ]
     }
   ]
 }

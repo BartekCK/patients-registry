@@ -4,9 +4,10 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {UserModule} from "./user.module";
 import {AuthModule} from "./auth.module";
 import {LoginController} from "../controllers/login.controller";
+import {credentials} from "../credentials";
 
 @Module({
-    imports: [MongooseModule.forRoot('mongodb://localhost:27017/register',
+    imports: [MongooseModule.forRoot(`mongodb+srv://${credentials}@registrydb-gawja.mongodb.net/registry?retryWrites=true&w=majority`,
         {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}),
         DiseaseModule,
         UserModule,
