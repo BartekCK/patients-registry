@@ -1,15 +1,49 @@
+import Geolocation from '@react-native-community/geolocation';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {LoginPage} from './components/LoginPage';
 import {storeData} from './helpers/storage/storage';
 
 export class HomeScreen extends React.Component {
   state = {
     token: '',
+    latitude: 0,
+    longitude: 0,
+    isShare: false,
   };
+  watchId = null;
+
+  componentWillUnmount = () => {
+    this.setState({isShare: false});
+    if (!this.watchId) {
+      Geolocation.clearWatch(this.watchId);
+      Geolocation.stopObserving();
+    }
+  };
+
+  componentDidUpdate = () => {};
 
   setToken = token => {
     storeData('@token', token).then(() => this.setState({token: token}));
+  };
+
+  geoLocation = () => {
+    const {isShare} = this.state;
+
+    if (isShare) {
+      this.watchId = Geolocation.watchPosition(
+        success => {
+          console.log(success);
+          //POST DATA WITH LOCATION TO THE SERVER
+        },
+        error => console.log(error),
+        {enableHighAccuracy: true},
+      );
+    } else {
+      Geolocation.clearWatch(this.watchId);
+      Geolocation.stopObserving();
+      this.watchId = null;
+    }
   };
 
   render() {
@@ -19,7 +53,17 @@ export class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>Hello world</Text>
+        <TouchableOpacity
+          style={styles.touchableButton}
+          onPress={() =>
+            this.setState({isShare: !this.state.isShare}, this.geoLocation)
+          }>
+          {this.state.isShare ? (
+            <Text style={styles.textButton}>Zakończ</Text>
+          ) : (
+            <Text style={styles.textButton}>Zlokalizuj</Text>
+          )}
+        </TouchableOpacity>
       </View>
     );
   }
@@ -29,5 +73,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1C0826',
+  },
+  touchableButton: {
+    width: 300,
+    height: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 300,
+    borderColor: '#8D009B',
+    borderWidth: 6,
+  },
+  textButton: {
+    fontSize: 30,
+    padding: 2,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
