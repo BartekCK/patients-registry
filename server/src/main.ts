@@ -12,7 +12,7 @@ async function bootstrap() {
 
     const options = new DocumentBuilder()
         .setTitle('API registry of patients')
-        .setVersion('0.0.1')
+        .setVersion('0.9.1')
         .addBearerAuth()
         .build();
 

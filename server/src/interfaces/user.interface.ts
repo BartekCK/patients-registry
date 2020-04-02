@@ -1,5 +1,6 @@
 import {DiseaseInterface} from "./disease.interface";
 import {HealthInterface} from "./health.interface";
+import {CoordinateInterface} from "./coordinate.interface";
 
 export interface UserInterface {
     readonly id?: string;
@@ -10,7 +11,5 @@ export interface UserInterface {
     readonly health?: HealthInterface;
     disease?: DiseaseInterface[];
 
-    readonly helpMe?: boolean;
-    readonly xCoordinate?: number;
-    readonly yCoordinate?: number;
+    readonly coordinate: CoordinateInterface;
 }

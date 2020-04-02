@@ -1,24 +1,8 @@
 import {HealthDto} from "./health.dto";
 import {DiseaseDto} from "./disease.dto";
 import {ApiProperty} from "@nestjs/swagger";
-import {IsBoolean, IsEmail, IsNumber, IsString} from "class-validator";
-
-class HelpDto {
-
-    @ApiProperty({
-        default: false
-    })
-    @IsBoolean()
-    helpMe: boolean;
-
-    @ApiProperty()
-    @IsNumber()
-    xCoordinate: number;
-
-    @ApiProperty()
-    @IsNumber()
-    yCoordinate: number;
-}
+import {IsEmail, IsString} from "class-validator";
+import {CoordinateDto} from "./coordinate.dto";
 
 
 export class UserDto {
@@ -44,5 +28,5 @@ export class UserDto {
     disease?: DiseaseDto[];
 
     @ApiProperty()
-    helpInf?: HelpDto;
+    coordinate?: CoordinateDto;
 }

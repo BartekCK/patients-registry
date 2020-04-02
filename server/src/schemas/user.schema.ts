@@ -28,7 +28,7 @@ const CoordinateInformation = new mongoose.Schema({
     yCoordinate: {
         type: Number
     }
-}, {_id: false});
+});
 
 
 export const UserSchema = new mongoose.Schema({
