@@ -6,6 +6,7 @@ import {Home} from "./components/Home";
 import {LoginPanel} from "./components/Login";
 import {SignUpPanel} from "./components/SignUp";
 import {SettingsProfile} from "./components/Settings";
+import {MapCoordinate} from "./components/MapCooridnate";
 
 class App extends React.Component {
 
@@ -34,6 +35,7 @@ class App extends React.Component {
                         <LoginPanel setCredentials={this.setCredentials}/>
                     </Route>
                     <Route exact path='/signup' component={SignUpPanel}/>
+                    <Route exact path="/map"><Navigation token={this.state} children={<MapCoordinate/>}/></Route>
                     <Route exact path="/settings"><Navigation token={this.state} children={<SettingsProfile/>}/></Route>
                 </Switch>
             </Router>

@@ -5,6 +5,7 @@ import {UserInterface} from "../interfaces/user.interface";
 import {UserService} from "./user.service";
 import {CoordinateDto} from "../dto/coordinate.dto";
 import {errorDbHandling} from "../helpers/errors";
+import {MapUserInterface} from "../interfaces/mapUser.interface";
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class CoordinateService {
 
     }
 
-    getAllLocationsWithDiseases(): Promise<any> {//MOST IMPORTANT
-        return undefined;
+    async getAllLocationsWithDiseases(): Promise<MapUserInterface[]> {//MOST IMPORTANT
+        return await this.user.find().select('disease phone healthInformation coordinateInformation').populate('disease', 'kind');
     }
 }

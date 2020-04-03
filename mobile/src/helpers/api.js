@@ -20,23 +20,27 @@ let token = getData('@token')
   .catch(err => console.log(err));
 
 const apiCall = (url, method, body, resolve, reject) => {
-  fetch(url, {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  })
-    .then(response => {
-      if (response.ok) {
-        response
-          .json()
-          .then(json => resolve(json))
-          .catch(err => console.log(err));
-      } else {
-        reject(response);
-      }
+  getData('@token')
+    .then(res => {
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          Authorization: `Bearer ${res}`,
+        },
+        body: JSON.stringify(body),
+      })
+        .then(response => {
+          if (response.ok) {
+            response
+              .json()
+              .then(json => resolve(json))
+              .catch(err => console.log(err));
+          } else {
+            reject(response);
+          }
+        })
+        .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
 };

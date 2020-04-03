@@ -3,6 +3,7 @@ import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {AuthGuard} from "@nestjs/passport";
 import {CoordinateDto} from "../dto/coordinate.dto";
 import {CoordinateService} from "../services/coordinate.service";
+import {MapUserInterface} from "../interfaces/mapUser.interface";
 
 @ApiTags('users/coordinates')
 @Controller('users/coordinates')
@@ -27,7 +28,7 @@ export class CoordinateController {
 
 
     @Get('/all')
-    async getAllLocationsWithDiseases(): Promise<any> {
+    async getAllLocationsWithDiseases(): Promise<MapUserInterface[]> {
         return this.coordinateService.getAllLocationsWithDiseases();
     }
 

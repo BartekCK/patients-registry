@@ -21,6 +21,7 @@ export const LoginPage = ({setToken}) => {
         <Input
           containerStyle={styles.input}
           inputStyle={styles.inputColor}
+          label="Twój adres email"
           placeholder="Email"
           leftIcon={{type: 'font-awesome', name: 'user', color: '#98969b'}}
           onChangeText={username => setCredentials({...credentials, username})}
@@ -29,6 +30,7 @@ export const LoginPage = ({setToken}) => {
           secureTextEntry={true}
           inputStyle={styles.inputColor}
           containerStyle={styles.input}
+          label="Hasło"
           placeholder="Hasło"
           leftIcon={{type: 'font-awesome', name: 'lock', color: '#98969b'}}
           onChangeText={password => setCredentials({...credentials, password})}

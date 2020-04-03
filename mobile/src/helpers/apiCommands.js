@@ -1,4 +1,5 @@
 import * as api from './api';
-import {apiLoginUrl} from './routes';
+import {apiCoordinatesUrl, apiLoginUrl} from './routes';
 
 export const loginUser = loginBody => api.post(apiLoginUrl(), loginBody);
+export const addUserCoordinate = coordinateBody => api.post(apiCoordinatesUrl(), coordinateBody);

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Watermark from '../../resources/watermark.png'
-import {Route, NavLink, HashRouter} from "react-router-dom";
+import {HashRouter, NavLink, Route} from "react-router-dom";
 import {DiseasePanel} from "./Disease";
 import {InformationPanel} from "./Information";
 import {CredentialsPanel} from "./Credentials";

@@ -3,6 +3,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {LoginPage} from './components/LoginPage';
 import {storeData} from './helpers/storage/storage';
+import {addUserCoordinate} from './helpers/apiCommands';
 
 export class HomeScreen extends React.Component {
   state = {
@@ -33,8 +34,15 @@ export class HomeScreen extends React.Component {
     if (isShare) {
       this.watchId = Geolocation.watchPosition(
         success => {
-          console.log(success);
-          //POST DATA WITH LOCATION TO THE SERVER
+          console.log(success); //TO CHECK LOCATION IN CONSOLE
+          addUserCoordinate({
+            xCoordinate: success.coords.latitude,
+            yCoordinate: success.coords.longitude,
+          })
+            .then(res => console.log(res))
+            .catch(err => {
+              console.log(err);
+            });
         },
         error => console.log(error),
         {enableHighAccuracy: true},

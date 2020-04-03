@@ -2,14 +2,9 @@ import {DiseaseInterface} from "./disease.interface";
 import {HealthInterface} from "./health.interface";
 import {CoordinateInterface} from "./coordinate.interface";
 
-export interface UserInterface {
-     id?: string;
-     email: string;
-     password: string;
+export interface MapUserInterface {
      phone: string;
-
      health?: HealthInterface;
-    disease?: DiseaseInterface[];
-
+     disease?: DiseaseInterface[];
      coordinate: CoordinateInterface;
 }

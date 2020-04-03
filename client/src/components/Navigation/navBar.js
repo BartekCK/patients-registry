@@ -118,7 +118,6 @@ export const NavMobile = (props) => {
                 <img src={NavCloseImg} onClick={props.click} alt=''/>
                 <Nav>
                     <a href="/map">Mapa</a>
-                    <a href="/contact">Kontakt</a>
                     {!window.localStorage.getItem('token') ?
                         <>
                             <a href="/signin">Zaloguj</a>
@@ -152,14 +151,11 @@ export const NavBar = () => (
     <>
         <Nav>
             <Link to="/"><img src={Logo} alt='logo'/></Link>
-            <ul>
-                <li>
-                    <LinkStyled to="/map">Mapa</LinkStyled>
-                </li>
-                <li>
-                    <LinkStyled to="/contact">Kontakt</LinkStyled>
-                </li>
-            </ul>
+            {/*<ul>*/}
+            {/*    <li>*/}
+            {/*        <LinkStyled to="/map">Mapa</LinkStyled>*/}
+            {/*    </li>*/}
+            {/*</ul>*/}
         </Nav>
         {!window.localStorage.getItem('token') ?
             <SingButtons/> :
