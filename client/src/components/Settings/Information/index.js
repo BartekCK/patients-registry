@@ -15,6 +15,7 @@ width: 100%;
 `;
 
 const Container = styled.div`
+padding-top: 100px;
 width: 100%;
 height: 100%;
   display: flex;
@@ -36,7 +37,7 @@ export class InformationPanel extends React.Component {
     };
 
     componentDidMount = () => {
-        axios.get('http://localhost:3001/users', ConfigApi)
+        axios.get('http://192.168.8.100:3001/users', ConfigApi)
             .then(response => this.setState(response.data.healthInformation))
             .catch(err => console.log(err));
     };
@@ -47,7 +48,7 @@ export class InformationPanel extends React.Component {
     };
 
     saveValues = async () => {
-        await axios.post('http://localhost:3001/users/health',
+        await axios.post('http://192.168.8.100:3001/users/health',
             this.state,
             ConfigApi)
             .then(response => console.log(response))

@@ -23,6 +23,11 @@ const LeftPanel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  
+  
+      @media screen and (max-width: 850px) {
+      margin: 100px 0 100px 0;
+}
 
 `;
 const RightPanel = styled.div`

@@ -151,11 +151,6 @@ export const NavBar = () => (
     <>
         <Nav>
             <Link to="/"><img src={Logo} alt='logo'/></Link>
-            {/*<ul>*/}
-            {/*    <li>*/}
-            {/*        <LinkStyled to="/map">Mapa</LinkStyled>*/}
-            {/*    </li>*/}
-            {/*</ul>*/}
         </Nav>
         {!window.localStorage.getItem('token') ?
             <SingButtons/> :
