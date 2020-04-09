@@ -61,7 +61,7 @@ export class MapCoordinate extends React.Component {
         await this.updateMap();
         const unique = new Set();
         this.interval = setInterval(async () => await this.updateMap(), 1000);
-        await axios.get('http://192.168.8.100:3001/diseases')
+        await axios.get('https://gps-server.now.sh/diseases')
             .then(response => {
                 response.data.forEach(ob => unique.add(ob.type));
             })
@@ -76,7 +76,7 @@ export class MapCoordinate extends React.Component {
 
     updateMap = async () => {
         console.log('Coordinates update');
-        const response = await axios.get('http://192.168.8.100:3001/users/coordinates/all', ConfigApi);
+        const response = await axios.get('https://gps-server.now.sh/users/coordinates/all', ConfigApi);
         this.setState({diseasesLocation: response.data});
     };
 

@@ -54,7 +54,7 @@ export class LoginPanel extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://192.168.8.100:3001/login', {...this.state})
+        axios.post('https://gps-server.now.sh/login', {...this.state})
             .then(response => {
                 this.setState({isLogin: true});
                 window.localStorage.setItem('token', response.data.access_token);

@@ -85,7 +85,7 @@ export class SignUpPanel extends React.Component {
         const tempErr = validate(this.state);
         this.setState({err: tempErr});
         if (!tempErr) {
-            axios.post('http://localhost:3001/users', {...this.state})
+            axios.post('https://gps-server.now.sh/users', {...this.state})
                 .then(response => {
                     if (response.status === 201) {
                         this.setState({registered: true});

@@ -74,11 +74,11 @@ export class DiseasePanel extends React.Component {
 
     componentDidMount = async () => {
         const diseases = [];
-        await axios.get('http://192.168.8.100:3001/diseases')
+        await axios.get('https://gps-server.now.sh/diseases')
             .then(response => diseases.push(...response.data))
             .catch(err => console.log(err));
 
-        await axios.get('http://192.168.8.100:3001/users/diseases',
+        await axios.get('https://gps-server.now.sh/users/diseases',
             ConfigApi)
             .then(response => this.setState({chooseList: response.data}))
             .catch(err => console.log(err));
@@ -100,7 +100,7 @@ export class DiseasePanel extends React.Component {
     };
 
     saveAll = async () => {
-        await axios.post('http://192.168.8.100:3001/users/diseases',
+        await axios.post('https://gps-server.now.sh/users/diseases',
             this.state.chooseList,
             ConfigApi)
             .then(response => console.log(response))

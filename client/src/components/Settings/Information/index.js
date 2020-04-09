@@ -37,7 +37,7 @@ export class InformationPanel extends React.Component {
     };
 
     componentDidMount = () => {
-        axios.get('http://192.168.8.100:3001/users', ConfigApi)
+        axios.get('https://gps-server.now.sh/users', ConfigApi)
             .then(response => this.setState(response.data.healthInformation))
             .catch(err => console.log(err));
     };
@@ -48,7 +48,7 @@ export class InformationPanel extends React.Component {
     };
 
     saveValues = async () => {
-        await axios.post('http://192.168.8.100:3001/users/health',
+        await axios.post('https://gps-server.now.sh/users/health',
             this.state,
             ConfigApi)
             .then(response => console.log(response))
