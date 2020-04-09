@@ -93,7 +93,7 @@ export class MapCoordinate extends React.Component {
                             <option name='type' key={disease} value={disease}>{disease}</option>
                         ))}
                     </Select>
-                    <FilterDiv onClick={() =>this.setState({isHelp: !this.state.isHelp})}>
+                    <FilterDiv onClick={() => this.setState({isHelp: !this.state.isHelp})}>
                         <P>Tylko potrzebujący pomocy</P>
                         <input type='checkbox' value={this.state.isHelp} checked={this.state.isHelp} readOnly={true}/>
                     </FilterDiv>
