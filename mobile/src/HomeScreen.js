@@ -1,9 +1,10 @@
 import Geolocation from '@react-native-community/geolocation';
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LoginPage} from './components/LoginPage';
 import {storeData} from './helpers/storage/storage';
 import {addUserCoordinate} from './helpers/apiCommands';
+import {PERMISSIONS, request} from 'react-native-permissions';
 
 export class HomeScreen extends React.Component {
   state = {
@@ -28,8 +29,13 @@ export class HomeScreen extends React.Component {
     storeData('@token', token).then(() => this.setState({token: token}));
   };
 
-  geoLocation = () => {
+  geoLocation = async () => {
     const {isShare} = this.state;
+
+    if (Platform.OS === 'android') {
+      const response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+      console.log(response);
+    }
 
     if (isShare) {
       this.watchId = Geolocation.watchPosition(
