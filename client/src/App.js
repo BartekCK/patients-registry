@@ -22,7 +22,7 @@ class App extends React.Component {
                         <Route exact path="/zaloguj"><LoginPanel setCredentials={this.setCredentials}/></Route>
                         <Route exact path='/zarejestruj' component={SignUpPanel}/>
                         <Route exact path="/map"><MapCoordinate/></Route>
-                        <PrivateRoute exact path="/settings"><SettingsProfile/></PrivateRoute>
+                        <PrivateRoute exact path="/settings" component={SettingsProfile}/>
                     </AuthContextProvider>
                 </Switch>
             </Router>

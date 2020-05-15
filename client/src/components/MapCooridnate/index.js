@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {Map, Marker, Popup, TileLayer} from "react-leaflet";
 import L from 'leaflet'
 import styled from "styled-components";
@@ -20,17 +21,17 @@ const SetPositionMarker = ({disease, phone, healthInformation, coordinateInforma
                 icon={myIcon}
                 position={[coordinateInformation.xCoordinate, coordinateInformation.yCoordinate]}>
                 <Popup>
-                    <h3>Moje dane</h3>
+                    <H4>Moje dane</H4>
                     <p>Mój numer: {phone}</p>
                     {disease &&
                     <>
-                        <h3>Moje choroby</h3>
+                        <H4>Moje choroby</H4>
                         {disease.map((ill, id) => <p key={id}>{ill.kind}</p>)}
                     </>}
                     {}
                     {healthInformation &&
                     <>
-                        <h3>Pomoc</h3>
+                        <H4>Pomoc</H4>
                         {healthInformation.emergencyNumber &&
                         <p>Numer alarmowy: {healthInformation.emergencyNumber}</p>}
                         {healthInformation.howHelp && <p>Jak pomóc: {healthInformation.howHelp}</p>}
@@ -45,85 +46,94 @@ const SetPositionMarker = ({disease, phone, healthInformation, coordinateInforma
 
 };
 
-export class MapCoordinate extends React.Component {
+export const MapCoordinate = () => {
 
-    state = {
+    const [data, setData] = useState({
         lat: 51.505,
         lng: -0.09,
         diseasesLocation: null,
         diseases: [],
         isHelp: false,
-    };
-    interval = null;
+    });
 
-    componentDidMount = async () => {
-        await this.updateMap();
-        const unique = new Set();
-        this.interval = setInterval(async () => {
-            await this.updateMap()
+    useEffect(() => {
+        let isCancel = false;
+        const getFromApi = async () => {
+            try {
+                const diseasesCoord = await getAllDiseasesCoordinates();
+                const diseases = await getAllDiseases();
+                const unique = new Set();
+                diseases.forEach(ob => unique.add(ob.type));
+                if (!isCancel) {
+                    setData((data) => ({...data, diseases: Array.from(unique), diseasesLocation: diseasesCoord}))
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        getFromApi();
+
+        let interval = setInterval(async () => {
+            try {
+                const diseasesCoord = await getAllDiseasesCoordinates();
+                if (!isCancel) {
+                    setData((data) => ({...data, diseasesLocation: diseasesCoord}));
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }, 1000);
-        try {
-            const response = await getAllDiseases();
-            response.forEach(ob => unique.add(ob.type));
-            this.setState({diseases: Array.from(unique)});
-        } catch (e) {
-            console.log(e);
+
+        return () => {
+            isCancel = true;
+            clearInterval(interval);
         }
-    };
+    }, []);
 
-    componentWillUnmount = () => {
-        console.log('Delete timer');
-        clearInterval(this.interval);
-    };
 
-    updateMap = async () => {
-        try {
-            const response = await getAllDiseasesCoordinates();
-            this.setState({diseasesLocation: response});
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    render() {
-        const position = [this.state.lat, this.state.lng];
-        const {diseasesLocation} = this.state;
-        return (
-            <MapContainer>
-                <FilterDiv>
-                    <P>Typ:</P>
-                    <Select name='type' onChange={this.updateState}>
-                        <option value=''/>
-                        {this.state.diseases.map(disease => (
-                            <option name='type' key={disease} value={disease}>{disease}</option>
-                        ))}
-                    </Select>
-                    <FilterDiv onClick={() => this.setState({isHelp: !this.state.isHelp})}>
-                        <P>Tylko potrzebujący pomocy</P>
-                        <input type='checkbox' value={this.state.isHelp} checked={this.state.isHelp} readOnly={true}/>
-                    </FilterDiv>
+    const position = [data.lat, data.lng];
+    const {diseasesLocation} = data;
+    return (
+        <MapContainer>
+            <FilterDiv>
+                <P>Typ:</P>
+                <Select name='type'>
+                    <option value=''/>
+                    {data.diseases.map(disease => (
+                        <option name='type' key={disease} value={disease}>{disease}</option>
+                    ))}
+                </Select>
+                <FilterDiv onClick={() => setData({...data, isHelp: !data.isHelp})}>
+                    <P>Tylko potrzebujący pomocy</P>
+                    <input type='checkbox' value={data.isHelp} checked={data.isHelp} readOnly={true}/>
                 </FilterDiv>
-                <Map className='map' center={position} zoom={3}>
-                    <TileLayer
-                        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    {diseasesLocation && diseasesLocation.map(person => {
-                        return (
-                            <SetPositionMarker
-                                key={person._id}
-                                disease={person.disease}
-                                phone={person.phone}
-                                healthInformation={person.healthInformation}
-                                coordinateInformation={person.coordinateInformation}
-                            />)
-                    })}
-                </Map>
-            </MapContainer>
+            </FilterDiv>
+            <Map className='map' center={position} zoom={3}>
+                <TileLayer
+                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {diseasesLocation && diseasesLocation.map(person => {
+                    return (
+                        <SetPositionMarker
+                            key={person._id}
+                            disease={person.disease}
+                            phone={person.phone}
+                            healthInformation={person.healthInformation}
+                            coordinateInformation={person.coordinateInformation}
+                        />)
+                })}
+            </Map>
+        </MapContainer>
 
-        )
-    }
+    )
+
 }
+
+const H4 = styled.h4`
+font-size: 1.3em;
+font-weight: bold;
+`
 
 const P = styled.p`
 font-size: 1em;
@@ -142,7 +152,6 @@ width: auto;
 display: flex;
 align-items: center;
 `;
-
 
 const Select = styled.select`
 width: 20vw;

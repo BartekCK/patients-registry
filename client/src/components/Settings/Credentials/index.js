@@ -3,6 +3,7 @@ import {ShowInput} from "../Disease/AddInput";
 import {AddButton} from "../Disease";
 import styled from "styled-components";
 import {getUserInformation, putUserInformation} from "../../../helpers/apiCommands";
+import {makeCancelable} from "../../../helpers/cancelAblePromise";
 
 const Input = styled(ShowInput)`
   width: 30%;
@@ -33,10 +34,17 @@ export const CredentialsPanel = () => {
         phone: '',
         password: ''
     });
+
+
     useEffect(() => {
-        getUserInformation()
+        const userInf = makeCancelable(getUserInformation());
+
+        userInf
+            .promise
             .then(response => setCredentials({...response.data}))
-            .catch(err => console.log(err));
+            .catch(({isCanceled, ...error}) => console.log('isCanceled', isCanceled));
+
+        return () => userInf.cancel();
     }, [])
 
     const setValues = e => {
