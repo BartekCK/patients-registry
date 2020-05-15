@@ -2,8 +2,7 @@ import React from "react";
 import {ShowInput} from "../Disease/AddInput";
 import {AddButton} from "../Disease";
 import styled from "styled-components";
-import axios from 'axios';
-import {ConfigApi} from "../../../helpers/routes";
+import {getUserInformation, postHealthInf} from "../../../helpers/apiCommands";
 
 const Input = styled(ShowInput)`
   width: 30%;
@@ -37,8 +36,11 @@ export class InformationPanel extends React.Component {
     };
 
     componentDidMount = () => {
-        axios.get('https://gps-server.now.sh/users', ConfigApi)
-            .then(response => this.setState(response.data.healthInformation))
+        getUserInformation()
+            .then(response => {
+                console.log(response);
+                this.setState(response.data.healthInformation)
+            })
             .catch(err => console.log(err));
     };
 
@@ -48,11 +50,12 @@ export class InformationPanel extends React.Component {
     };
 
     saveValues = async () => {
-        await axios.post('https://gps-server.now.sh/users/health',
-            this.state,
-            ConfigApi)
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
+        try {
+            const response = await postHealthInf({...this.state});
+            console.log(response);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
 

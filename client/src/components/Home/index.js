@@ -2,7 +2,7 @@ import React from "react";
 import ImgBackground from '../../resources/img/background.png'
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {Button} from "../../helpers/theme";
+import {Button} from "react-bootstrap";
 
 const TextDiv = styled.div`
     color: white;
@@ -25,10 +25,7 @@ const HomeContainer = styled.div`
     align-items: center;
     justify-content: space-around;
     
-     & ${Button} {
-        border: 3px dashed #a023ce;
-    }
-    
+     
     & > img{
         max-width: 100%;
         height: auto;
@@ -56,7 +53,7 @@ export class Home extends React.Component {
                     <h1>Publiczny rejestr identyfikacyjny chorych osób</h1>
                     <p>Za pomocą jednego kliknięcia znajdź osoby potrzebujące twojej pomocy</p>
                     <Link to='/map'>
-                        <Button>Szukaj</Button>
+                        <Button variant='primary' className='w-25'>Szukaj</Button>
                     </Link>
                 </TextDiv>
             </HomeContainer>)

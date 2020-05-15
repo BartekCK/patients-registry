@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {ShowInput} from "../Disease/AddInput";
 import {AddButton} from "../Disease";
 import styled from "styled-components";
-import axios from 'axios';
-import {ConfigApi} from "../../../helpers/routes";
+import {getUserInformation, putUserInformation} from "../../../helpers/apiCommands";
 
 const Input = styled(ShowInput)`
   width: 30%;
@@ -27,47 +26,41 @@ const Label = styled.label`
   font-size: 1.2em;
 `;
 
-export class CredentialsPanel extends React.Component {
+export const CredentialsPanel = () => {
 
-    state = {
+    const [credentials, setCredentials] = useState({
         email: '',
         phone: '',
         password: ''
-    };
-
-    componentDidMount = () => {
-        axios.get('https://gps-server.now.sh/users', ConfigApi)
-            .then(response => this.setState(response.data))
+    });
+    useEffect(() => {
+        getUserInformation()
+            .then(response => setCredentials({...response.data}))
             .catch(err => console.log(err));
+    }, [])
+
+    const setValues = e => {
+        setCredentials({...credentials, [e.target.name]: e.target.value});
     };
 
-
-    setValues = e => {
-        this.setState({[e.target.name]: e.target.value})
+    const saveValues = async () => {
+        try {
+            const result = await putUserInformation({...credentials})
+            console.log(result);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
-    saveValues = async () => {
-        await axios.put('https://gps-server.now.sh/users/',
-            this.state,
-            ConfigApi)
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
-    };
-
-
-    render() {
-        const {email, phone, password} = this.state;
-        return (
-            <Container>
-                <Label>Email</Label>
-                <Input value={email} name='email' onChange={this.setValues}/>
-                <Label>Numer telefonu</Label>
-                <Input value={phone} name='phone' onChange={this.setValues}/>
-                <Label>Hasło</Label>
-                <Input type='password' value={password} name='password' onChange={this.setValues}/>
-                <AddButton onClick={this.saveValues}>Zapisz</AddButton>
-            </Container>)
-    }
-
+    return (
+        <Container>
+            <Label>Email</Label>
+            <Input value={credentials.email} name='email' onChange={setValues}/>
+            <Label>Numer telefonu</Label>
+            <Input value={credentials.phone} name='phone' onChange={setValues}/>
+            <Label>Hasło</Label>
+            <Input type='password' value={credentials.password} name='password' onChange={setValues}/>
+            <AddButton onClick={saveValues}>Zapisz</AddButton>
+        </Container>)
 
 }

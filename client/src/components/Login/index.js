@@ -1,10 +1,64 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Logo from '../../resources/img/loginImage.png'
-import {LinkStyled} from "../Navigation/navBar";
 import {GreenButton} from "../../helpers/theme";
-import axios from 'axios';
-import {Redirect} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
+import {signIn} from "../../helpers/apiCommands";
+import {AuthContext} from "../../context";
+import {LOGIN} from "../../context/reducer";
+
+
+export const LoginPanel = (props) => {
+
+    const {dispatch} = React.useContext(AuthContext);
+
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: '',
+        isLogin: false
+    });
+
+    const updateField = e => {
+        setCredentials({...credentials, [e.target.name]: e.target.value});
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await signIn({...credentials})
+            const user = {token: response.data.access_token};
+            dispatch({type: LOGIN, user: user});
+            setCredentials({...credentials, isLogin: true});
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+    return (
+        <LoginDiv>
+            <Form className="login" onSubmit={handleSubmit}>
+                <img src={Logo} alt=''/>
+                <Input name='username' type="text" placeholder="Email" onChange={updateField}/><br/>
+                <Input name='password' type="password" placeholder="Hasło" onChange={updateField}/><br/>
+                <GreenButton type="submit">Zaloguj</GreenButton>
+                <LinkStyled to='/signup'>Załóż konto</LinkStyled>
+            </Form>
+            {credentials.isLogin && <Redirect to='/'/>}
+        </LoginDiv>
+    )
+
+}
+
+export const LinkStyled = styled(Link)`
+  text-decoration: none;
+  font-size: 1em;
+  color: white;
+  &:hover{
+      border-bottom: 1px solid #ccc;
+  }
+`;
+
 
 const LoginDiv = styled.div`
 width: 100vw;
@@ -37,46 +91,3 @@ const Input = styled.input`
      box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2);
     }
  `;
-
-
-export class LoginPanel extends React.Component {
-
-
-    state = {
-        username: '',
-        password: '',
-        isLogin: false
-    };
-
-    updateField = e => {
-        this.setState({[e.target.name]: e.target.value})
-    };
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('https://gps-server.now.sh/login', {...this.state})
-            .then(response => {
-                this.setState({isLogin: true});
-                window.localStorage.setItem('token', response.data.access_token);
-                this.props.setCredentials(response.data.access_token);
-            })
-            .catch(err => console.log(err));
-
-
-    };
-
-    render() {
-        return (
-            <LoginDiv>
-                <Form className="login" onSubmit={this.handleSubmit}>
-                    <img src={Logo} alt=''/>
-                    <Input name='username' type="text" placeholder="Email" onChange={this.updateField}/><br/>
-                    <Input name='password' type="password" placeholder="Hasło" onChange={this.updateField}/><br/>
-                    <GreenButton type="submit">Zaloguj</GreenButton>
-                    <LinkStyled to='/signup'>Załóż konto</LinkStyled>
-                </Form>
-                {this.state.isLogin && <Redirect to='/'/>}
-            </LoginDiv>
-        )
-    }
-}

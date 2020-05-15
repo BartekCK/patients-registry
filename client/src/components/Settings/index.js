@@ -1,7 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Watermark from '../../resources/watermark.png'
-import {HashRouter, NavLink, Route} from "react-router-dom";
 import {DiseasePanel} from "./Disease";
 import {InformationPanel} from "./Information";
 import {CredentialsPanel} from "./Credentials";
@@ -65,29 +64,40 @@ background: #0099FF;
       margin-bottom: 10px;
 `;
 
-export class SettingsProfile extends React.Component {
+export const SettingsProfile = () => {
 
-    render() {
-        return (
-            <SettingContainer>
-                <HashRouter>
-                    <LeftPanel>
+    const [component, setComponent] = useState('');
+    return (
+        <SettingContainer>
+            <LeftPanel>
+                <Button onClick={() => setComponent('DISEASE')}>Choroby</Button>
+                <Button onClick={() => setComponent('INFORMATION')}>Informacje</Button>
+                <Button onClick={() => setComponent('CREDENTIALS')}>Dane użytkownika</Button>
+            </LeftPanel>
+            <RightPanel>
+                <DiseasePanelControl state={component}/>
+                <InformationPanelControl state={component}/>
+                <CredentialsPanelControl state={component}/>
+            </RightPanel>
+        </SettingContainer>);
 
-                        <NavLink exact to='/diseases'> <Button>Choroby</Button>
-                        </NavLink>
-                        <NavLink to='/information'> <Button>Informacje</Button>
-                        </NavLink>
-                        <NavLink to='/user'> <Button>Dane użytkownika</Button>
-                        </NavLink>
 
-                    </LeftPanel>
-                    <RightPanel>
-                        <Route path="/diseases" component={DiseasePanel}/>
-                        <Route path="/information" component={InformationPanel}/>
-                        <Route path="/user" component={CredentialsPanel}/>
-                    </RightPanel>
-                </HashRouter>
-            </SettingContainer>);
-    }
+}
 
+const DiseasePanelControl = ({state}) => {
+    if (state === 'DISEASE')
+        return <DiseasePanel/>
+    else return null;
+}
+
+const InformationPanelControl = ({state}) => {
+    if (state === 'INFORMATION')
+        return <InformationPanel/>
+    else return null;
+}
+
+const CredentialsPanelControl = ({state}) => {
+    if (state === 'CREDENTIALS')
+        return <CredentialsPanel/>
+    else return null;
 }

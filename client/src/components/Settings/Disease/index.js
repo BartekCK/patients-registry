@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {GreenButton} from "../../../helpers/theme";
-import axios from 'axios';
 import {AddInput} from "./AddInput";
 import * as _ from 'ramda';
-import {ConfigApi} from "../../../helpers/routes";
+import {getAllDiseases, getUserDiseases, postUserDiseases} from "../../../helpers/apiCommands";
 
 const DiseaseDiv = styled.div`
 display: flex;
@@ -73,38 +72,39 @@ export class DiseasePanel extends React.Component {
     };
 
     componentDidMount = async () => {
-        const diseases = [];
-        await axios.get('https://gps-server.now.sh/diseases')
-            .then(response => diseases.push(...response.data))
-            .catch(err => console.log(err));
+        try {
+            const response = await getAllDiseases();
+            const diseases = [...response];
+            const responseUser = await getUserDiseases();
+            this.setState({chooseList: responseUser.data})
 
-        await axios.get('https://gps-server.now.sh/users/diseases',
-            ConfigApi)
-            .then(response => this.setState({chooseList: response.data}))
-            .catch(err => console.log(err));
+            const tempObject = [];
+            const unique = new Set();
 
-        const tempObject = [];
-        const unique = new Set();
-
-        diseases.forEach(disease => unique.add(disease.type));
-        unique.forEach(type => {
-            let temp = [];
-            diseases.forEach(disease => {
-                if (disease.type === type) {
-                    temp.push(disease.kind);
-                }
+            diseases.forEach(disease => unique.add(disease.type));
+            unique.forEach(type => {
+                let temp = [];
+                diseases.forEach(disease => {
+                    if (disease.type === type) {
+                        temp.push(disease.kind);
+                    }
+                });
+                tempObject.push({types: type, kinds: temp});
             });
-            tempObject.push({types: type, kinds: temp});
-        });
-        this.setState({diseases: tempObject});
+            this.setState({diseases: tempObject});
+
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     saveAll = async () => {
-        await axios.post('https://gps-server.now.sh/users/diseases',
-            this.state.chooseList,
-            ConfigApi)
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
+        try {
+            const result = await postUserDiseases(this.state.chooseList)
+            console.log(result);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     addToList = () => {
@@ -130,21 +130,27 @@ export class DiseasePanel extends React.Component {
     render() {
         return (
             <DiseaseDiv>
-                <Select name='type' onChange={this.updateState}>
-                    <option value=''/>
-                    {this.state.diseases.map(disease => (
-                        <option name='type' key={disease.types} value={disease.types}>{disease.types}</option>
-                    ))}
-                </Select>
-                <Select name='kind' onChange={this.updateState}>
-                    <option value=''/>
-                    {this.state.diseases.map(disease => {
-                        if (disease.types === this.state.type)
-                            return disease.kinds.map(el => (<option key={el} value={el}>{el}</option>));
-                        else
-                            return null;
-                    })}
-                </Select>
+                <div>
+                    <label>Typ </label>
+                    <Select name='type' onChange={this.updateState}>
+                        <option value=''/>
+                        {this.state.diseases.map(disease => (
+                            <option name='type' key={disease.types} value={disease.types}>{disease.types}</option>
+                        ))}
+                    </Select>
+                </div>
+                <div>
+                    <label>Rodzaj </label>
+                    <Select name='kind' onChange={this.updateState}>
+                        <option value=''/>
+                        {this.state.diseases.map(disease => {
+                            if (disease.types === this.state.type)
+                                return disease.kinds.map(el => (<option key={el} value={el}>{el}</option>));
+                            else
+                                return null;
+                        })}
+                    </Select>
+                </div>
                 <AddDiv>
                     <div>
                         <AddButton onClick={this.addToList}>+</AddButton>

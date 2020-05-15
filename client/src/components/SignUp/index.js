@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import axios from 'axios';
 import Image from '../../resources/img/signUpData.png';
 import {GreenButton} from "../../helpers/theme";
 import {Redirect} from 'react-router-dom'
+import {singUp} from "../../helpers/apiCommands";
 
 const RegistrationPanel = styled.div`
 width: 100vw;
@@ -85,7 +85,7 @@ export class SignUpPanel extends React.Component {
         const tempErr = validate(this.state);
         this.setState({err: tempErr});
         if (!tempErr) {
-            axios.post('https://gps-server.now.sh/users', {...this.state})
+            singUp({...this.state})
                 .then(response => {
                     if (response.status === 201) {
                         this.setState({registered: true});
@@ -101,7 +101,7 @@ export class SignUpPanel extends React.Component {
         return (
             <RegistrationPanel>
                 <div>
-                    {this.state.err && <ErrorDiv ref={this.focusRef}>{this.state.err}</ErrorDiv>}
+                    {this.state.err && <ErrorDiv>{this.state.err}</ErrorDiv>}
                     <Form onSubmit={this.handleSubmit}>
                         <label>Email *</label> <input type='email' name='email' onChange={this.updateField}/>
                         <label>Hasło *</label> <input type='password' name='password' onChange={this.updateField}/>
