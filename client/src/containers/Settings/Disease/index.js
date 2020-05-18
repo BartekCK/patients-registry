@@ -4,6 +4,7 @@ import {GreenButton} from "../../../helpers/theme";
 import {AddInput} from "./AddInput";
 import * as _ from 'ramda';
 import {getAllDiseases, getUserDiseases, postUserDiseases} from "../../../helpers/apiCommands";
+import {Button, Dropdown, DropdownButton} from "react-bootstrap";
 
 const DiseaseDiv = styled.div`
 display: flex;
@@ -14,30 +15,6 @@ width: 100%;
 flex-direction: column;
 height: 65vh;
 
-}
-`;
-
-const Select = styled.select`
-width: 20vw;
-height: 40px;
-cursor: pointer;
-background-color: transparent;
-border: 3px solid #0AC986;
-border-radius: 2px;
-color: white;
-font-size: 1em;
--webkit-appearance: none;
-option {
-color: white;
-background-color: #181126;
-display: flex;
-white-space: pre;
-min-height: 20px;
-padding: 100px;
-}
-@media screen and (max-width: 850px) {
-width: 100%;
-margin: 10px 0 10px 0;
 }
 `;
 
@@ -131,29 +108,35 @@ export class DiseasePanel extends React.Component {
         return (
             <DiseaseDiv>
                 <div>
-                    <label>Typ </label>
-                    <Select name='type' onChange={this.updateState}>
-                        <option value=''/>
+                    <DropdownButton id="dropdown-basic-button" title='Typ choroby'>
                         {this.state.diseases.map(disease => (
-                            <option name='type' key={disease.types} value={disease.types}>{disease.types}</option>
+                            <Dropdown.Item key={disease.types}>
+                                <Button className='w-100' variant='outline-primary' name='type' value={disease.types}
+                                        onClick={this.updateState}>{disease.types}</Button>
+                            </Dropdown.Item>
                         ))}
-                    </Select>
+                    </DropdownButton>
                 </div>
                 <div>
-                    <label>Rodzaj </label>
-                    <Select name='kind' onChange={this.updateState}>
-                        <option value=''/>
+
+                    <DropdownButton id="dropdown-basic-button" title='Rodzaj choroby' className=''>
                         {this.state.diseases.map(disease => {
                             if (disease.types === this.state.type)
-                                return disease.kinds.map(el => (<option key={el} value={el}>{el}</option>));
+                                return disease.kinds.map(el => (
+                                    <Dropdown.Item key={el}>
+                                        <Button size='sm' className='w-100 font-weight-light' variant='outline-primary'
+                                                name='kind' value={el}
+                                                onClick={this.updateState}>{el}</Button>
+                                    </Dropdown.Item>))
                             else
                                 return null;
                         })}
-                    </Select>
+                    </DropdownButton>
+
                 </div>
                 <AddDiv>
                     <div>
-                        <AddButton onClick={this.addToList}>+</AddButton>
+                        <Button variant='success' className='w-100' onClick={this.addToList}>+</Button>
                         {this.state.chooseList.map((el, id) => (
                             <AddInput
                                 key={id}
@@ -162,7 +145,7 @@ export class DiseasePanel extends React.Component {
                                 delete={this.deleteFromList}
                             />))}
                     </div>
-                    <AddButton onClick={this.saveAll}>Zapisz</AddButton>
+                    <Button variant='success' className='w-100' onClick={this.saveAll}>Zapisz</Button>
                 </AddDiv>
             </DiseaseDiv>
         )

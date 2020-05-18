@@ -2,7 +2,7 @@ import {Button, FormControl, InputGroup} from "react-bootstrap";
 import React, {useState} from "react";
 
 
-export const SimpleInput = ({goFilter, diseasesLocation}) => {
+export const GeoLocationFilter = ({goFilter, diseasesLocation}) => {
 
     const [value, setValue] = useState('');
 

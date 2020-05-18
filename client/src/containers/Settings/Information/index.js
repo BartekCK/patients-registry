@@ -1,18 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {ShowInput} from "../Disease/AddInput";
-import {AddButton} from "../Disease";
 import styled from "styled-components";
 import {getUserInformation, postHealthInf} from "../../../helpers/apiCommands";
 import {makeCancelable} from "../../../helpers/cancelAblePromise";
+import {SimpleInput} from "../../../components/SimpleInput";
+import {Button} from "react-bootstrap";
 
-const Input = styled(ShowInput)`
-  width: 30%;
-  margin: 20px 0 20px 0;
-  @media screen and (max-width: 850px) {
-width: 100%;
-
-}
-`;
 
 const Container = styled.div`
 padding-top: 100px;
@@ -24,9 +16,6 @@ height: 100%;
   align-items: center;
 `;
 
-const Label = styled.label`
-  font-size: 1.2em;
-`;
 
 export const InformationPanel = () => {
 
@@ -41,19 +30,19 @@ export const InformationPanel = () => {
 
         userInf
             .promise
-            .then(response => setState((state)=>({...state, ...response.data.healthInformation})))
+            .then(response => setState((state) => ({...state, ...response.data.healthInformation})))
             .catch(({isCanceled, ...error}) => console.log('isCanceled', isCanceled));
         return () => userInf.cancel();
     }, [])
 
 
     const setValues = e => {
-        this.setState({[e.target.name]: e.target.value})
+        setState({...state, [e.target.name]: e.target.value})
     };
 
     const saveValues = async () => {
         try {
-            const response = await postHealthInf({...this.state});
+            const response = await postHealthInf({...state});
             console.log(response);
         } catch (e) {
             console.log(e);
@@ -63,12 +52,9 @@ export const InformationPanel = () => {
     const {emergencyNumber, howHelp, notDo} = state;
     return (
         <Container>
-            <Label>Numer alarmowy</Label>
-            <Input value={emergencyNumber} name='emergencyNumber' onChange={setValues}/>
-            <Label>Jak mi pomóc</Label>
-            <Input value={howHelp} name='howHelp' onChange={setValues}/>
-            <Label>Czego nie robić</Label>
-            <Input value={notDo} name='notDo' onChange={setValues}/>
-            <AddButton onClick={saveValues}>Zapisz</AddButton>
+            <SimpleInput name='emergencyNumber' onChange={setValues} value={emergencyNumber} label='Numer alarmowy'/>
+            <SimpleInput name='howHelp' onChange={setValues} value={howHelp} label='Jak mi pomóc'/>
+            <SimpleInput name='notDo' onChange={setValues} value={notDo} label='Czego nie robić'/>
+            <Button className='w-25' variant='success' onClick={saveValues}>Zapisz</Button>
         </Container>)
 }

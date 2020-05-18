@@ -5,7 +5,7 @@ import L from 'leaflet'
 import styled from "styled-components";
 import {getAllDiseases, getAllDiseasesCoordinates} from "../../helpers/apiCommands";
 import {pointImage} from "../../helpers/routes";
-import {SimpleInput} from "../../components/SimpleInput/SimpleInput";
+import {GeoLocationFilter} from "../../components/Filters/GeoLocationFilter";
 import {Button} from "react-bootstrap";
 import {TypeFilter} from "../../components/Filters/TypeFilters";
 import Row from "react-bootstrap/Row";
@@ -141,14 +141,14 @@ export const MapCoordinate = () => {
         <MapContainer>
             <FilterDiv>
 
-                <Row className='p-1'>
+                <Row className='w-75 p-1'>
                     {filters &&
                     <Button onClick={clearFilters} className='ml-2' variant='outline-danger'>Usuń filtry</Button>}
                     {!filters &&
                     <>
                         <TypeFilter goFilter={goFilter} diseases={data.diseases} diseasesLocation={diseasesLocation}/>
                         <HelpFilter goFilter={goFilter} diseasesLocation={diseasesLocation}/>
-                        <SimpleInput goFilter={goFilter} diseasesLocation={diseasesLocation}/>
+                        <GeoLocationFilter goFilter={goFilter} diseasesLocation={diseasesLocation}/>
                     </>}
 
                 </Row>

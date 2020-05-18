@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {GreenButton} from "../../../helpers/theme";
+import {Button, FormControl, InputGroup} from "react-bootstrap";
 
 export const ShowInput = styled.input`
   width: 80%;
@@ -12,13 +12,6 @@ export const ShowInput = styled.input`
     font-size: 1em;
     padding: 0;
 
-`;
-
-const MinusButton = styled(GreenButton)`
-width: 20%;
-height: 46px;
-background: #a30000;
-margin: 0;
 `;
 
 const Container = styled.div`
@@ -35,8 +28,12 @@ export const AddInput = (props) => {
 
     return (
         <Container>
-            <ShowInput value={props.kind} type='text' disabled={true}/>
-            <MinusButton onClick={destroy}>-</MinusButton>
+            <InputGroup>
+                <FormControl value={props.kind} disabled={true}/>
+                <InputGroup.Append>
+                    <Button variant='danger' onClick={destroy}>-</Button>
+                </InputGroup.Append>
+            </InputGroup>
         </Container>
     );
 
