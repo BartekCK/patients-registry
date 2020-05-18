@@ -12,6 +12,7 @@ export class HomeScreen extends React.Component {
     latitude: 0,
     longitude: 0,
     isShare: false,
+    helpMe: false,
   };
   watchId = null;
 
@@ -29,6 +30,19 @@ export class HomeScreen extends React.Component {
     storeData('@token', token).then(() => this.setState({token: token}));
   };
 
+  changeHelp = () => {
+    this.setState({...this.state, helpMe: !this.state.helpMe}, () => {
+      addUserCoordinate({
+        ...this.state,
+        helpMe: this.state.helpMe,
+      })
+        .then(res => console.log(res))
+        .catch(err => {
+          console.log(err);
+        });
+    });
+  };
+
   geoLocation = async () => {
     const {isShare} = this.state;
 
@@ -41,14 +55,24 @@ export class HomeScreen extends React.Component {
       this.watchId = Geolocation.watchPosition(
         success => {
           console.log(success); //TO CHECK LOCATION IN CONSOLE
-          addUserCoordinate({
-            xCoordinate: success.coords.latitude,
-            yCoordinate: success.coords.longitude,
-          })
-            .then(res => console.log(res))
-            .catch(err => {
-              console.log(err);
-            });
+          this.setState(
+            {
+              ...this.state,
+              latitude: success.coords.latitude,
+              longitude: success.coords.longitude,
+            },
+            () => {
+              addUserCoordinate({
+                ...this.state,
+                xCoordinate: success.coords.latitude,
+                yCoordinate: success.coords.longitude,
+              })
+                .then(res => console.log(res))
+                .catch(err => {
+                  console.log(err);
+                });
+            },
+          );
         },
         error => console.log(error),
         {enableHighAccuracy: true},
@@ -60,9 +84,13 @@ export class HomeScreen extends React.Component {
     }
   };
 
+  setHelp = coordinateInformation => {
+    this.setState({...coordinateInformation});
+  };
+
   render() {
     if (!this.state.token) {
-      return <LoginPage setToken={this.setToken} />;
+      return <LoginPage setHelp={this.setHelp} setToken={this.setToken} />;
     }
 
     return (
@@ -78,6 +106,14 @@ export class HomeScreen extends React.Component {
             <Text style={styles.textButton}>Zlokalizuj</Text>
           )}
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.changeHelp}>
+          {this.state.helpMe ? (
+            <Text style={styles.textButton}>Zakończ pomoc</Text>
+          ) : (
+            <Text style={styles.textButton}>Zawołaj o pomoc</Text>
+          )}
+        </TouchableOpacity>
       </View>
     );
   }
@@ -91,6 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1C0826',
   },
   touchableButton: {
+    marginVertical: 100,
     width: 300,
     height: 300,
     alignItems: 'center',

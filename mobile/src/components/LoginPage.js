@@ -3,12 +3,16 @@ import {Image, StyleSheet, View} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import {loginUser} from '../helpers/apiCommands';
 
-export const LoginPage = ({setToken}) => {
+export const LoginPage = ({setHelp,setToken}) => {
   const [credentials, setCredentials] = useState({});
 
   const signIn = () => {
     loginUser({...credentials})
-      .then(res => setToken(res.access_token))
+      .then(res => {
+        console.log(res);
+        setToken(res.access_token);
+        setHelp(res.coordinateInformation);
+      })
       .catch(err => console.log(err));
   };
 

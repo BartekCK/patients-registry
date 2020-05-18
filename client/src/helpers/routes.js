@@ -1,7 +1,7 @@
 export const ConfigApi = {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}};
 
-// const route = 'https://gps-server.now.sh'
-const route = 'http://localhost:3001'
+const route = 'https://gps-server.now.sh'
+// const route = 'http://localhost:3001'
 
 export const diseasesApi = (id) => id ? `${route}/diseases/${id}` : `${route}/diseases` //GET
 
