@@ -5,6 +5,13 @@ import L from 'leaflet'
 import styled from "styled-components";
 import {getAllDiseases, getAllDiseasesCoordinates} from "../../helpers/apiCommands";
 import {pointImage} from "../../helpers/routes";
+import {SimpleInput} from "../../components/SimpleInput/SimpleInput";
+import {Button} from "react-bootstrap";
+import {TypeFilter} from "../../components/Filters/TypeFilters";
+import Row from "react-bootstrap/Row";
+import {HelpFilter} from "../../components/Filters/HelpFilter";
+import UserGps from '../../resources/img/userGps.png'
+
 
 const myIcon = L.icon({
     iconUrl: pointImage,
@@ -13,9 +20,26 @@ const myIcon = L.icon({
     popupAnchor: [0, -41],
 });
 
-const SetPositionMarker = ({disease, phone, healthInformation, coordinateInformation}) => {
+const userIcon = L.icon({
+    iconUrl: UserGps,
+    iconSize: [25, 41],
+    iconAnchor: [12.5, 41],
+    popupAnchor: [0, -41],
+});
+
+const SetPositionMarker = ({id, disease, phone, healthInformation, coordinateInformation}) => {
 
     if (coordinateInformation) {
+        if (id === '-200')
+            return (
+                <Marker
+                    icon={userIcon}
+                    position={[coordinateInformation.xCoordinate, coordinateInformation.yCoordinate]}>
+                    <Popup>
+                        <H4>Cześć, to Ty !</H4>
+                    </Popup>
+                </Marker>
+            )
         return (
             <Marker
                 icon={myIcon}
@@ -55,17 +79,19 @@ export const MapCoordinate = () => {
         diseases: [],
         isHelp: false,
     });
+    const [filters, setFilters] = useState(false);
+
+    const intervalRef = React.useRef({interval: null, isCancel: false});
+
 
     useEffect(() => {
-        let isCancel = false;
         const getFromApi = async () => {
             try {
-                const diseasesCoord = await getAllDiseasesCoordinates();
                 const diseases = await getAllDiseases();
                 const unique = new Set();
                 diseases.forEach(ob => unique.add(ob.type));
-                if (!isCancel) {
-                    setData((data) => ({...data, diseases: Array.from(unique), diseasesLocation: diseasesCoord}))
+                if (!intervalRef.current.isCancel) {
+                    setData((data) => ({...data, diseases: Array.from(unique)}))
                 }
             } catch (e) {
                 console.log(e);
@@ -73,22 +99,40 @@ export const MapCoordinate = () => {
         }
         getFromApi();
 
-        let interval = setInterval(async () => {
+        intervalRef.current.interval = startInterval();
+
+        return () => {
+            intervalRef.current.isCancel = true;
+            clearInterval(intervalRef.current.interval);
+            intervalRef.current = null;
+        }
+    }, []);
+
+    const startInterval = () => {
+        return setInterval(async () => {
             try {
                 const diseasesCoord = await getAllDiseasesCoordinates();
-                if (!isCancel) {
+                if (!intervalRef.current.isCancel) {
                     setData((data) => ({...data, diseasesLocation: diseasesCoord}));
                 }
             } catch (e) {
                 console.log(e);
             }
         }, 1000);
+    }
 
-        return () => {
-            isCancel = true;
-            clearInterval(interval);
-        }
-    }, []);
+    const goFilter = (value) => {
+        intervalRef.current.isCancel = true;
+        clearInterval(intervalRef.current.interval);
+        setData({...data, diseasesLocation: value})
+        setFilters(true);
+    }
+
+    const clearFilters = () => {
+        setFilters(false);
+        intervalRef.current.isCancel = false;
+        intervalRef.current.interval = startInterval();
+    }
 
 
     const position = [data.lat, data.lng];
@@ -96,17 +140,20 @@ export const MapCoordinate = () => {
     return (
         <MapContainer>
             <FilterDiv>
-                <P>Typ:</P>
-                <Select name='type'>
-                    <option value=''/>
-                    {data.diseases.map(disease => (
-                        <option name='type' key={disease} value={disease}>{disease}</option>
-                    ))}
-                </Select>
-                <FilterDiv onClick={() => setData({...data, isHelp: !data.isHelp})}>
-                    <P>Tylko potrzebujący pomocy</P>
-                    <input type='checkbox' value={data.isHelp} checked={data.isHelp} readOnly={true}/>
-                </FilterDiv>
+
+                <Row className='p-1'>
+                    {filters &&
+                    <Button onClick={clearFilters} className='ml-2' variant='outline-danger'>Usuń filtry</Button>}
+                    {!filters &&
+                    <>
+                        <TypeFilter goFilter={goFilter} diseases={data.diseases} diseasesLocation={diseasesLocation}/>
+                        <HelpFilter goFilter={goFilter} diseasesLocation={diseasesLocation}/>
+                        <SimpleInput goFilter={goFilter} diseasesLocation={diseasesLocation}/>
+                    </>}
+
+                </Row>
+
+
             </FilterDiv>
             <Map className='map' center={position} zoom={3}>
                 <TileLayer
@@ -117,6 +164,7 @@ export const MapCoordinate = () => {
                     return (
                         <SetPositionMarker
                             key={person._id}
+                            id={person._id}
                             disease={person.disease}
                             phone={person.phone}
                             healthInformation={person.healthInformation}
@@ -127,18 +175,12 @@ export const MapCoordinate = () => {
         </MapContainer>
 
     )
-
 }
 
 const H4 = styled.h4`
 font-size: 1.3em;
 font-weight: bold;
 `
-
-const P = styled.p`
-font-size: 1em;
-margin: 10px;
-`;
 
 const MapContainer = styled.div`
   width: 100%;
@@ -148,30 +190,5 @@ const MapContainer = styled.div`
 `;
 
 const FilterDiv = styled.div`
-width: auto;
-display: flex;
-align-items: center;
-`;
 
-const Select = styled.select`
-width: 20vw;
-height: 35px;
-cursor: pointer;
-background-color: transparent;
-border: 3px solid #0AC986;
-border-radius: 2px;
-color: white;
-font-size: 1em;
--webkit-appearance: none;
-option {
-color: white;
-background-color: #181126;
-display: flex;
-white-space: pre;
-min-height: 20px;
-}
-@media screen and (max-width: 850px) {
-width: 100%;
-margin: 10px 0 10px 0;
-}
 `;

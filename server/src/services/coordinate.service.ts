@@ -25,6 +25,6 @@ export class CoordinateService {
     }
 
     async getAllLocationsWithDiseases(): Promise<MapUserInterface[]> {//MOST IMPORTANT
-        return await this.user.find().select('disease phone healthInformation coordinateInformation').populate('disease', 'kind');
+        return await this.user.find().select('disease phone healthInformation coordinateInformation').populate('disease', 'kind type');
     }
 }

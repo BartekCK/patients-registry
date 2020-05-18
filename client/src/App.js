@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import {AppNav} from "./components/Navigation";
+import {AppNav} from "./containers/Navigation";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {Home} from "./components/Home";
-import {LoginPanel} from "./components/Login";
-import {SignUpPanel} from "./components/SignUp";
-import {SettingsProfile} from "./components/Settings";
-import {MapCoordinate} from "./components/MapCooridnate";
+import {Home} from "./containers/Home";
+import {LoginPanel} from "./containers/Login";
+import {SignUpPanel} from "./containers/SignUp";
+import {SettingsProfile} from "./containers/Settings";
+import {MapCoordinate} from "./containers/MapCooridnate";
 import {AuthContextProvider} from "./context";
 import {PrivateRoute} from "./helpers/PrivateRoute";
 
