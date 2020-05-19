@@ -9,8 +9,8 @@ import {PERMISSIONS, request} from 'react-native-permissions';
 export class HomeScreen extends React.Component {
   state = {
     token: '',
-    latitude: 0,
-    longitude: 0,
+    xCoordinate: 0,
+    yCoordinate: 0,
     isShare: false,
     helpMe: false,
   };
@@ -58,8 +58,8 @@ export class HomeScreen extends React.Component {
           this.setState(
             {
               ...this.state,
-              latitude: success.coords.latitude,
-              longitude: success.coords.longitude,
+              xCoordinate: success.coords.latitude,
+              yCoordinate: success.coords.longitude,
             },
             () => {
               addUserCoordinate({
